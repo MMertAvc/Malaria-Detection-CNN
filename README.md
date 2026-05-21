@@ -1,64 +1,181 @@
-# Malaria Image Classification with Convolutional Neural Networks
+# Malaria Detection with CNN
 
-## Project Overview
+An end-to-end deep learning solution that automates malaria detection from microscopic blood cell images, featuring a custom CNN architecture and an interactive Streamlit web application.
 
-Malaria is a life-threatening disease caused by parasites transmitted through infected mosquitoes. Prompt and precise diagnosis is essential for treatment. This project develops a **Convolutional Neural Network (CNN)** to automate the detection of malaria by analyzing microscopic blood cell images. 
+---
 
-The end-to-end solution features data preprocessing, a custom CNN architecture, and an interactive **Streamlit web application** for real-time predictions.
+## English
 
-## Dataset
+### About
 
-The dataset consists of **27,558 microscopic cell images** equally divided into two classes:
-- **Parasitized:** Cells containing Plasmodium parasites.
-- **Uninfected:** Healthy, parasite-free cells.
+Malaria is a life-threatening disease caused by parasites transmitted through infected mosquitoes. Prompt and precise diagnosis is essential for effective treatment. This project develops a **Convolutional Neural Network (CNN)** to automate the detection of malaria by classifying microscopic blood cell images as either parasitized (infected) or uninfected (healthy).
 
-## Model Architecture
+### Features
 
-A custom Sequential Deep Learning model built with TensorFlow/Keras. Features include:
-- Input shape of `(30, 30, 3)` (RGB normalized images)
-- 2x `Conv2D` layers with `ReLU` activation for feature extraction.
-- 2x `MaxPooling2D` layers to reduce spatial dimensions.
-- Flattened output connected to Dense Hidden Layers.
-- Final output layer using `Softmax` for Binary Classification (Parasitized vs. Uninfected).
+- Binary classification: Parasitized vs. Uninfected
+- Custom Sequential CNN built with TensorFlow/Keras
+- Interactive Streamlit web app for real-time predictions
+- End-to-end pipeline: data loading → preprocessing → training → deployment
 
-## Project Structure
+### Dataset
+
+| Property | Detail |
+|---|---|
+| Total Images | 27,558 |
+| Parasitized | 13,779 |
+| Uninfected | 13,779 |
+| Input Shape | 30 × 30 × 3 (RGB) |
+
+Images are normalized to [0, 1] before training.
+
+### Model Architecture
 
 ```
-├── cell_images/                              # Image directory
-│   ├── Parasitized/                          # Infected cell images
-│   └── Uninfected/                           # Healthy cell images
-├── Image Classification with CNN for Malaria Data.ipynb  # Jupyter Notebook for EDA & Model Training
-├── app.py                                    # Streamlit Web UI application
-├── my_malaria_cnn_model.h5                   # Trained Keras Model
-├── requirements.txt                          # Python dependencies
-└── README.md                                 # Project documentation
+Input (30, 30, 3)
+→ Conv2D → ReLU → MaxPooling2D
+→ Conv2D → ReLU → MaxPooling2D
+→ Flatten
+→ Dense (Hidden Layers)
+→ Dense (2, softmax)
 ```
 
-## How to Run
+Compiled with **Adam** optimizer and **Sparse Categorical Crossentropy** loss.  
+Trained weights saved as `my_malaria_cnn_model.h5`.
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/malaria-cnn-classification.git
-   cd malaria-cnn-classification
-   ```
+### How to Run
 
-2. **Install the dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+**1. Clone the repository**
+```bash
+git clone https://github.com/MMertAvc/Malaria-Detection-CNN.git
+cd Malaria-Detection-CNN
+```
 
-3. **Run the Streamlit Web App:**
-   ```bash
-   streamlit run app.py
-   ```
-   *Upload a cell image using the web UI to instantly classify whether the cell is infected with Malaria.*
+**2. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-4. **Train the Model (Optional):**
-   Open the Jupyter Notebook to explore the data pipeline and retrain the CNN.
-   ```bash
-   jupyter notebook "Image Classification with CNN for Malaria Data.ipynb"
-   ```
+**3. Run the Streamlit app**
+```bash
+streamlit run app.py
+```
+Upload a cell image via the web interface to instantly classify it.
 
-## Key Learnings & Improvements
-- **Robust Feature Extraction:** Deep learning proves highly capable of identifying complex microscopic patterns for disease diagnosis.
-- **Micro-service Deployment:** Streamlit is used for seamless, interactive end-user deployment.
+**4. (Optional) Retrain the model**
+```bash
+jupyter notebook "Image Classification with CNN for Malaria Data.ipynb"
+```
+
+### Project Structure
+
+```
+├── cell_images/
+│   ├── Parasitized/
+│   └── Uninfected/
+├── Image Classification with CNN for Malaria Data.ipynb
+├── app.py
+├── my_malaria_cnn_model.h5
+├── requirements.txt
+└── README.md
+```
+
+### Requirements
+
+```
+tensorflow
+keras
+streamlit
+numpy
+pillow
+matplotlib
+scikit-learn
+```
+
+---
+
+## Türkçe
+
+### Hakkında
+
+Sıtma, enfekte sivrisinekler tarafından iletilen parazitlerin yol açtığı hayatı tehdit eden bir hastalıktır. Hızlı ve hassas tanı, etkili tedavi için kritik önem taşır. Bu proje, mikroskobik kan hücresi görüntülerini parazitli (enfekte) veya enfekte olmayan (sağlıklı) olarak sınıflandırarak sıtma tespitini otomatikleştiren bir **Evrişimsel Sinir Ağı (CNN)** geliştirir.
+
+### Özellikler
+
+- İkili sınıflandırma: Parazitli - Enfekte Olmayan
+- TensorFlow/Keras ile oluşturulmuş özel Sequential CNN
+- Gerçek zamanlı tahminler için etkileşimli Streamlit web uygulaması
+- Uçtan uca işlem hattı: veri yükleme → ön işleme → eğitim → dağıtım
+
+### Veri Seti
+
+| Özellik | Detay |
+|---|---|
+| Toplam Görüntü | 27.558 |
+| Parazitli | 13.779 |
+| Enfekte Olmayan | 13.779 |
+| Giriş Boyutu | 30 × 30 × 3 (RGB) |
+
+Görüntüler eğitim öncesinde [0, 1] aralığına normalize edilir.
+
+### Model Mimarisi
+
+```
+Giriş (30, 30, 3)
+→ Conv2D → ReLU → MaxPooling2D
+→ Conv2D → ReLU → MaxPooling2D
+→ Flatten
+→ Dense (Gizli Katmanlar)
+→ Dense (2, softmax)
+```
+
+**Adam** optimizörü ve **Seyrek Kategorik Çapraz Entropi** kaybı ile derlenir.  
+Eğitilmiş ağırlıklar `my_malaria_cnn_model.h5` olarak kaydedilir.
+
+### Nasıl Çalıştırılır
+
+**1. Repoyu klonlayın**
+```bash
+git clone https://github.com/MMertAvc/Malaria-Detection-CNN.git
+cd Malaria-Detection-CNN
+```
+
+**2. Bağımlılıkları yükleyin**
+```bash
+pip install -r requirements.txt
+```
+
+**3. Streamlit uygulamasını çalıştırın**
+```bash
+streamlit run app.py
+```
+Web arayüzü üzerinden bir hücre görüntüsü yükleyerek anında sınıflandırma yapın.
+
+**4. (İsteğe Bağlı) Modeli yeniden eğitin**
+```bash
+jupyter notebook "Image Classification with CNN for Malaria Data.ipynb"
+```
+
+### Proje Yapısı
+
+```
+├── cell_images/
+│   ├── Parasitized/
+│   └── Uninfected/
+├── Image Classification with CNN for Malaria Data.ipynb
+├── app.py
+├── my_malaria_cnn_model.h5
+├── requirements.txt
+└── README.md
+```
+
+### Gereksinimler
+
+```
+tensorflow
+keras
+streamlit
+numpy
+pillow
+matplotlib
+scikit-learn
+```
